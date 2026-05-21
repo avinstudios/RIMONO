@@ -1,0 +1,376 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+}
+
+#game-container {
+    position: relative;
+    width: 1024px;
+    height: 768px;
+    background: #1a1a2e;
+    border: 4px solid #0f3460;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+}
+
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #0f3460 0%, #16213e 50%, #0f3460 100%);
+}
+
+/* HUD Styling */
+.hud {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.health-bar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 2px solid #e94560;
+    min-width: 250px;
+}
+
+.health-bar-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #e94560;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.health-bar {
+    width: 100%;
+    height: 24px;
+    background: #1a1a1a;
+    border: 1px solid #555;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.health-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff00, #ffff00);
+    width: 100%;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+}
+
+.health-text {
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.companion-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 2px solid #4a90e2;
+}
+
+.companion-icon {
+    font-size: 24px;
+}
+
+.companion-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.companion-name {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.companion-status-text {
+    font-size: 12px;
+    color: #4a90e2;
+}
+
+.chapter-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 40px;
+    border-radius: 12px;
+    border: 3px solid #ffd700;
+    z-index: 200;
+    text-align: center;
+    animation: slideIn 0.5s ease;
+}
+
+.chapter-display.hidden {
+    display: none;
+}
+
+.chapter-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Dialogue Box */
+#dialogue-box {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    right: 30px;
+    background: rgba(0, 0, 0, 0.95);
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 150;
+    max-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+}
+
+#dialogue-box.hidden {
+    display: none;
+}
+
+.dialogue-speaker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #4a90e2;
+}
+
+.speaker-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #4a90e2;
+}
+
+.speaker-icon {
+    font-size: 20px;
+}
+
+.dialogue-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #e0e0e0;
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.dialogue-continue {
+    text-align: right;
+    font-size: 12px;
+    color: #888;
+    font-style: italic;
+}
+
+/* Story Overlay */
+.story-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 250;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.story-overlay.hidden {
+    display: none;
+}
+
+.story-content {
+    background: rgba(0, 0, 0, 0.95);
+    border: 3px solid #ffd700;
+    border-radius: 12px;
+    padding: 40px;
+    max-width: 600px;
+    text-align: center;
+}
+
+.story-event-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+/* Mobile Controls */
+.mobile-controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    gap: 30px;
+    z-index: 100;
+}
+
+.dpad-container {
+    display: grid;
+    grid-template-columns: repeat(3, 50px);
+    grid-template-rows: repeat(3, 50px);
+    gap: 5px;
+}
+
+.dpad-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    border: 2px solid #4a90e2;
+    background: rgba(74, 144, 226, 0.3);
+    color: #4a90e2;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+}
+
+.dpad-button:hover {
+    background: rgba(74, 144, 226, 0.6);
+    box-shadow: 0 0 10px rgba(74, 144, 226, 0.6);
+}
+
+.dpad-button:active {
+    transform: scale(0.9);
+}
+
+.dpad-up {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.dpad-left {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.dpad-center {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.dpad-right {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.dpad-down {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+.dpad-row {
+    display: flex;
+    gap: 5px;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 2px solid #e94560;
+    background: rgba(233, 69, 96, 0.3);
+    color: #e94560;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.action-button:hover {
+    background: rgba(233, 69, 96, 0.6);
+    box-shadow: 0 0 10px rgba(233, 69, 96, 0.6);
+}
+
+.action-button:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    #game-container {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    .mobile-controls {
+        display: flex;
+    }
+
+    .hud {
+        flex-direction: column;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+    }
+
+    .health-bar-container {
+        min-width: 100%;
+    }
+
+    .chapter-display {
+        padding: 30px;
+    }
+
+    .chapter-title {
+        font-size: 32px;
+    }
+
+    #dialogue-box {
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        padding: 15px;
+    }
+}

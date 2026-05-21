@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIMONO - A Story-Driven Adventure</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        
+        <!-- Mobile Touch Controls -->
+        <div id="mobile-controls" class="mobile-controls">
+            <!-- D-Pad -->
+            <div class="dpad-container">
+                <button class="dpad-button dpad-up" data-direction="up">↑</button>
+                <div class="dpad-row">
+                    <button class="dpad-button dpad-left" data-direction="left">←</button>
+                    <div class="dpad-center"></div>
+                    <button class="dpad-button dpad-right" data-direction="right">→</button>
+                </div>
+                <button class="dpad-button dpad-down" data-direction="down">↓</button>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button id="interact-btn" class="action-button interact-button">Interact (E)</button>
+                <button id="attack-btn" class="action-button attack-button">Attack (Space)</button>
+            </div>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud" class="hud">
+            <div class="health-bar-container">
+                <div class="health-bar-label">Health</div>
+                <div class="health-bar">
+                    <div id="health-fill" class="health-fill"></div>
+                </div>
+                <div id="health-text" class="health-text">100/100</div>
+            </div>
+
+            <div class="companion-status">
+                <div class="companion-icon">👥</div>
+                <div class="companion-info">
+                    <div class="companion-name">Will the Hero</div>
+                    <div id="companion-status-text" class="companion-status-text">Nearby</div>
+                </div>
+            </div>
+
+            <div id="chapter-display" class="chapter-display hidden">
+                <div id="chapter-title" class="chapter-title"></div>
+            </div>
+        </div>
+
+        <!-- Dialogue Box -->
+        <div id="dialogue-box" class="dialogue-box hidden">
+            <div class="dialogue-speaker">
+                <span id="speaker-name" class="speaker-name"></span>
+                <span id="speaker-icon" class="speaker-icon"></span>
+            </div>
+            <div id="dialogue-text" class="dialogue-text"></div>
+            <div class="dialogue-continue">
+                <span>Press SPACE or tap to continue...</span>
+            </div>
+        </div>
+
+        <!-- Story Event Overlay -->
+        <div id="story-overlay" class="story-overlay hidden">
+            <div class="story-content">
+                <div id="story-event-text" class="story-event-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Utility Scripts -->
+    <script src="js/utils/Vector2.js"></script>
+    <script src="js/utils/InputHandler.js"></script>
+    <script src="js/utils/RenderingEngine.js"></script>
+    <script src="js/utils/Collision.js"></script>
+
+    <!-- Core Entity System -->
+    <script src="js/core/Entity.js"></script>
+    <script src="js/core/Map.js"></script>
+
+    <!-- Game Entities -->
+    <script src="js/entities/Player.js"></script>
+    <script src="js/entities/Enemy.js"></script>
+    <script src="js/entities/NPC.js"></script>
+
+    <!-- Game Systems -->
+    <script src="js/systems/Combat.js"></script>
+    <script src="js/systems/Dialogue.js"></script>
+    <script src="js/systems/Story.js"></script>
+    <script src="js/systems/CompanionAI.js"></script>
+
+    <!-- Main Game Loop -->
+    <script src="js/Game.js"></script>
+</body>
+</html>
